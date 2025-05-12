@@ -5,7 +5,7 @@ Description : Streamlit UI display components.
 
 import streamlit as st
 import pandas as pd
-from config import COL_DEPARTMENT_CODE, COL_GENDER_CODE
+from config import COL_DEPARTMENT_CODE, COL_GENDER_CODE, COL_CODE_TERR
 
 def sidebar_filters(df: pd.DataFrame):
     """
@@ -22,15 +22,18 @@ def sidebar_filters(df: pd.DataFrame):
         A 4-element tuple containing:
         - departments (list): List of selected department codes.
         - gender (list): List of selected gender codes.
-        - commune (str): Text input for filtering commune names.
+        - town (str): Text input for filtering town names.
         - name (str): Text input for filtering elected officials by name.
     """
     st.sidebar.title("🔍 Filtres")
-    departments = st.sidebar.multiselect("Départements", df[COL_DEPARTMENT_CODE].dropna().unique())
-    gender = st.sidebar.multiselect("Genre", df[COL_GENDER_CODE].dropna().unique())
-    commune = st.sidebar.text_input("Commune contient :")
-    name = st.sidebar.text_input("Nom de l'élu contient :")
-    return departments, gender, commune, name
+    # Combine unique department and collectivity codes
+    territory_codes = df[COL_CODE_TERR].dropna().unique()
+    territory_codes = sorted(territory_codes)
+    departments = st.sidebar.multiselect("🏙️ Département ou Collectivité", territory_codes)  
+    gender = st.sidebar.multiselect("👨‍⚖️👩‍⚖️ Genre :", df[COL_GENDER_CODE].dropna().unique())
+    town = st.sidebar.text_input("🏘️ Commune contient :")
+    name = st.sidebar.text_input("🧑‍⚖️ Nom de l'élu contient :")
+    return departments, gender, town, name
 
 def interactive_table(df: pd.DataFrame):
     """
