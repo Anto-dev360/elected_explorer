@@ -1,0 +1,17 @@
+# Cache files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environnement
+.venv/
+
+# Local data
+/data/*.csv
+
+# temporary files
+*.log
+.DS_Store
+
+# Streamlit
+.streamlit/config.toml
