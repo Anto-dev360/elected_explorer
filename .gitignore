@@ -3,8 +3,9 @@ __pycache__/
 *.py[cod]
 *.pyo
 
-# Virtual environnement
+# Virtual environnement/settings
 .venv/
+pyproject.toml
 
 # Local data
 /data/*.csv
@@ -12,6 +13,4 @@ __pycache__/
 # temporary files
 *.log
 .DS_Store
-
-# Streamlit
-.streamlit/config.toml
+.vscode/

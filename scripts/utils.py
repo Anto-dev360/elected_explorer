@@ -6,6 +6,7 @@ Description : Utilities for downloading and caching data files.
 import os
 import requests
 
+
 def download_if_not_exists(url: str, output_path: str) -> None:
     """
     Download a file from a URL if it does not already exist locally.
@@ -24,7 +25,7 @@ def download_if_not_exists(url: str, output_path: str) -> None:
         try:
             response = requests.get(url)
             response.raise_for_status()
-            with open(output_path, 'wb') as f:
+            with open(output_path, "wb") as f:
                 f.write(response.content)
         except requests.RequestException as e:
-            raise RuntimeError(f"Erreur lors du téléchargement depuis {url} : {e}")
+            raise RuntimeError(f"Erreur lors du téléchargement depuis {url} : {str(e)}")

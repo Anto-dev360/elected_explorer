@@ -4,9 +4,13 @@ Description : Applying user filters.
 """
 
 import pandas as pd
-from config import COL_DEPARTMENT_CODE, COL_GENDER_CODE, COL_TOWN_NAME, COL_NAME, COL_CODE_TERR
 
-def apply_filters(df: pd.DataFrame, departments, gender, town_name, name) -> pd.DataFrame:
+from config.settings import COL_CODE_TERR, COL_GENDER_CODE, COL_NAME, COL_TOWN_NAME
+
+
+def apply_filters(
+    df: pd.DataFrame, departments, gender, town_name, name
+) -> pd.DataFrame:
     """
     Filter the elected officials dataset based on user-defined criteria.
 
@@ -39,6 +43,6 @@ def apply_filters(df: pd.DataFrame, departments, gender, town_name, name) -> pd.
         if name:
             df = df[df[COL_NAME].str.contains(name, case=False, na=False)]
     except Exception as e:
-        print(f"Filter error: {e}")
+        print(f"Filter error: {str(e)}")
         return pd.DataFrame()
     return df

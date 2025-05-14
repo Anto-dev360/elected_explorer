@@ -36,3 +36,8 @@ COL_LON = "longitude"
 # Map view defaults
 MAP_ZOOM = 5
 MAP_RADIUS = 300
+
+# UI constants
+APP_ICON = "🗳️"
+APP_LAYOUT = "wide"
+APP_INITIAL_SIDEBAR_STATE = "expanded"

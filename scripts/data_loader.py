@@ -3,11 +3,21 @@ Author : Anthony Morin
 Description : Loading and enriching data.
 """
 
+import unicodedata
+
 import pandas as pd
 import streamlit as st
-import unicodedata
+
+from config.settings import (
+    COL_CODE_TERR,
+    COL_COLLEC_CODE,
+    COL_DEPARTMENT_CODE,
+    COL_TOWN_CODE,
+    DATA_URL,
+    TOWN_URL,
+)
 from scripts.utils import download_if_not_exists
-from config import DATA_URL, TOWN_URL, COL_TOWN_CODE, COL_CODE_TERR, COL_DEPARTMENT_CODE, COL_COLLEC_CODE
+
 
 @st.cache_data(show_spinner=False)
 def download_and_load_data(url: str = DATA_URL) -> pd.DataFrame:
@@ -33,8 +43,9 @@ def download_and_load_data(url: str = DATA_URL) -> pd.DataFrame:
         df[COL_CODE_TERR] = df[COL_DEPARTMENT_CODE].fillna(df[COL_COLLEC_CODE])
         return df
     except Exception as e:
-        st.error(f"Erreur de chargement des données des élus : {e}")
+        st.error(f"Erreur de chargement des données des élus : {str(e)}")
         return pd.DataFrame()
+
 
 @st.cache_data(show_spinner=False)
 def merge_coordinates_with_elec(df_elec: pd.DataFrame) -> pd.DataFrame:
@@ -72,13 +83,14 @@ def merge_coordinates_with_elec(df_elec: pd.DataFrame) -> pd.DataFrame:
             df_elec,
             town_df[[COL_TOWN_CODE, "latitude", "longitude"]],
             on=COL_TOWN_CODE,
-            how="left"
+            how="left",
         )
         return merged_df
 
     except Exception as e:
-        st.error(f"Erreur lors de la fusion avec les coordonnées : {e}")
+        st.error(f"Erreur lors de la fusion avec les coordonnées :{str(e)}")
         return df_elec
+
 
 def normalize_column(col_name):
     """
@@ -94,6 +106,12 @@ def normalize_column(col_name):
     str
         A normalized column name ready for consistent internal processing.
     """
-    col_name = col_name.strip().lower().replace(" ", "_").replace("'", "_")
-    col_name = unicodedata.normalize('NFKD', col_name).encode('ASCII', 'ignore').decode('utf-8')
+    col_name = (
+        col_name.strip().lower().replace(" ", "_").replace("'", "_").replace("-", "_")
+    )
+    col_name = (
+        unicodedata.normalize("NFKD", col_name)
+        .encode("ASCII", "ignore")
+        .decode("utf-8")
+    )
     return col_name

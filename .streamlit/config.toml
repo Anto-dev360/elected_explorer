@@ -1,0 +1,6 @@
+[theme]
+primaryColor = "#1E88E5"                  # Deep blue for buttons and highlights
+backgroundColor = "#0E1117"               # Dark background for the app
+secondaryBackgroundColor = "#1C1F26"      # Slightly lighter background for containers/cards
+textColor = "#FAFAFA"                     # Bright white text for contrast
+font = "sans serif"                       # Clean and readable font
