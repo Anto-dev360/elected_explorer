@@ -15,6 +15,8 @@ from config.settings import (
     COL_SOCIOPRO_LABEL,
     MAP_RADIUS,
     MAP_ZOOM,
+    MAP_RADIUS_MIN_PX,
+    MAP_RADIUS_MAX_PX,
 )
 
 
@@ -169,16 +171,30 @@ def mayors_map(df: pd.DataFrame) -> None:
             get_position="[longitude, latitude]",
             get_fill_color="fill_color",
             get_radius=MAP_RADIUS,
+            radius_min_pixels=MAP_RADIUS_MIN_PX,
+            radius_max_pixels=MAP_RADIUS_MAX_PX,
             pickable=True,
             auto_highlight=True,
+            stroked=True,
+            line_width_min_pixels=1,
+            get_line_color=[0, 0, 0, 100],
         )
 
         # Create tooltip
         tooltip = {
-            "html": "<b>Nom:</b> {prenom_de_l_elu} {nom_de_l_elu}<br>"
-            "<b>Commune:</b> {libelle_de_la_commune}<br>"
-            "<b>Département:</b> {libelle_du_departement}",
-            "style": {"backgroundColor": "steelblue", "color": "white"},
+            "html": """
+                <div style="padding: 8px; font-size: 13px;">
+                    <b>👤 {prenom_de_l_elu} {nom_de_l_elu}</b><br>
+                    🏘️ <b>Commune:</b> {libelle_de_la_commune}<br>
+                    🏞️ <b>Département:</b> {libelle_du_departement}
+                </div>
+            """,
+            "style": {
+                "backgroundColor": "rgba(0, 0, 0, 0.7)",
+                "color": "white",
+                "border": "1px solid #ccc",
+                "borderRadius": "5px",
+            },
         }
 
         # Initial view configuration
@@ -192,7 +208,7 @@ def mayors_map(df: pd.DataFrame) -> None:
         # Display map
         st.pydeck_chart(
             pdk.Deck(
-                map_style="mapbox://styles/mapbox/light-v9",
+                map_style="mapbox://styles/mapbox/dark-v10",
                 layers=[layer],
                 initial_view_state=view_state,
                 tooltip=tooltip,

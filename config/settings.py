@@ -36,6 +36,8 @@ COL_LON = "longitude"
 # Map view defaults
 MAP_ZOOM = 5
 MAP_RADIUS = 300
+MAP_RADIUS_MIN_PX = 3
+MAP_RADIUS_MAX_PX = 12
 
 # UI constants
 APP_ICON = "🗳️"

@@ -127,12 +127,14 @@ def about():
     st.markdown(
         """
                 ### 🏛️ Source des données:
-                Les données proviennent du site [data.gouv.fr](https://www.data.gouv.fr/fr/datasets/repertoire-national-des-elus-1/),
-                qui est la plateforme de données ouvertes du gouvernement français.
+                <small>Les données proviennent du site [data.gouv.fr](https://www.data.gouv.fr/fr/datasets/repertoire-national-des-elus-1/),
+                qui est la plateforme de données ouvertes du gouvernement français.</small>
                 ---
                 ### 🛠️ Application réalisée avec:
                 - [Streamlit](https://streamlit.io) - Framework pour applications de données
                 - [Pandas](https://pandas.pydata.org/) - Manipulation de données
                 - [Plotly](https://plotly.com/) - Visualisations interactives
-                - [PyDeck](https://deckgl.readthedocs.io/) - Cartographie interactive"""
+                - [PyDeck](https://deckgl.readthedocs.io/) - Cartographie interactive
+        """,
+        unsafe_allow_html=True
     )
